@@ -37,7 +37,7 @@ def nextid():
 
 
 try:
-    fn_name = raw_input('Enter user name: ')
+    fn_name = input('Enter user name: ')
 except:
     print("You must provide a name")
     sys.exit(0)

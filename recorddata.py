@@ -17,7 +17,7 @@ l=1
 while True:
     
     newperson = False
-    x = raw_input('Press any alphabetical key: ')
+    x = input('Press any alphabetical key: ')
     if(x=='exit'):
         break
     if(((x>'a' or x=='a') and (x<'z' or x=='z')) or ((x>'A' or x=='A') and (x<'Z' or x=='Z'))):

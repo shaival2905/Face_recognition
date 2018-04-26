@@ -1,11 +1,11 @@
 import cv2, numpy, os, shutil
-import pyttsx
+#import pyttsx
 import sqlite3
 size = 2
 fn_haar = 'haarcascade_frontalface_default.xml'
 fn_dir = 'att_faces'
-speech_engine = pyttsx.init('sapi5') 
-speech_engine.setProperty('rate', 150)
+#speech_engine = pyttsx.init('sapi5') 
+#speech_engine.setProperty('rate', 150)
 p='temp'
 model=""
 def getdetail(Name):
@@ -24,9 +24,9 @@ def getdetail(Name):
     conn.commit()
     conn.close()
     
-def speak(text):
+"""def speak(text):
 	speech_engine.say(text)
-	speech_engine.runAndWait()
+	speech_engine.runAndWait()"""
 
 def insertOrUpdateB(Id,Name):
     conn=sqlite3.connect("FaceBase.db")
@@ -102,7 +102,7 @@ for (subdirs, dirs, files) in os.walk(fn_dir):
 
 (images, lables) = [numpy.array(lis) for lis in [images, lables]]
 
-model = cv2.createLBPHFaceRecognizer()
+model = cv2.face.LBPHFaceRecognizer_create()
 model.train(images, lables)
 
 
@@ -172,12 +172,12 @@ while True:
             if prediction[1]<60:
                 cv2.putText(frame,'%s - %.0f' % (names[prediction[0]],prediction[1]),(x-10, y-10), cv2.FONT_HERSHEY_PLAIN,1,(0, 255, 0))
                 if(flag2==False):
-                    speak("Hello "+names[prediction[0]])
+                    #speak("Hello "+names[prediction[0]])
                     flag2=True
                 if(flag1==False):
                     data = "\""+names[prediction[0]] +"\""
                     if(getdetail(data)):
-                        speak("This person is blocked")
+                        #speak("This person is blocked")
                         flag1=True
                 j=0
                  
@@ -185,14 +185,14 @@ while True:
                 flag=True
                 flag1=True
                 flag2=True
-                speak("New person detected")
-                speak("Would you like to open door and store person in database")
-                choice = raw_input("Enter choice Y/N: ")
+                #speak("New person detected")
+                #speak("Would you like to open door and store person in database")
+                choice = input("Enter choice Y/N: ")
                 
                 
                 if(choice == "Y"):
-                    speak("Please insert person details")
-                    name = raw_input('Enter name: ')
+                    #speak("Please insert person details")
+                    name = input('Enter name: ')
                     if not os.path.isdir(p):
                         os.mkdir(p)
                     """folder = os.listdir(p)
@@ -219,9 +219,9 @@ while True:
                 else:
                     """webcam.release()
                     cv2.destroyAllWindows()"""  
-                    speak("Person is to be added in block list")
-                    speak("Please insert person details")
-                    name = raw_input('Enter name: ')
+                    #speak("Person is to be added in block list")
+                    #speak("Please insert person details")
+                    name = input('Enter name: ')
                     if not os.path.isdir(p):
                         os.mkdir(p)
                     """folder = os.listdir(p)
