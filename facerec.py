@@ -3,6 +3,7 @@ import cv2, numpy, os, shutil
 import sqlite3
 size = 2
 fn_haar = 'haarcascade_frontalface_default.xml'
+
 fn_dir = 'att_faces'
 #speech_engine = pyttsx.init('sapi5') 
 #speech_engine.setProperty('rate', 150)
@@ -77,34 +78,36 @@ def nextid():
 print('Training...')
 
 
-(images, lables, names, id) = ([], [], {}, 0)
+#global images, lables, names, id
 
-for (subdirs, dirs, files) in os.walk(fn_dir):
-
-    for subdir in dirs:
-        names[id] = subdir
-        subjectpath = os.path.join(fn_dir, subdir)
-
-        for filename in os.listdir(subjectpath):
-
-            f_name, f_extension = os.path.splitext(filename)
-            if(f_extension.lower() not in
-                    ['.png','.jpg','.jpeg','.gif','.pgm']):
-                print("Skipping "+filename+", wrong file type")
-                continue
-            path = subjectpath + '/' + filename
-            lable = id
-
-            images.append(cv2.imread(path, 0))
-            lables.append(int(lable))
-        id += 1
-(im_width, im_height) = (112, 92)
-
-(images, lables) = [numpy.array(lis) for lis in [images, lables]]
-
-model = cv2.face.LBPHFaceRecognizer_create()
-model.train(images, lables)
-
+def climage():
+    (images, lables, names, id) = ([], [], {}, 0)
+    for (subdirs, dirs, files) in os.walk(fn_dir):
+    
+        for subdir in dirs:
+            names[id] = subdir
+            subjectpath = os.path.join(fn_dir, subdir)
+    
+            for filename in os.listdir(subjectpath):
+    
+                f_name, f_extension = os.path.splitext(filename)
+                if(f_extension.lower() not in
+                        ['.png','.jpg','.jpeg','.gif','.pgm']):
+                    print("Skipping "+filename+", wrong file type")
+                    continue
+                path = subjectpath + '/' + filename
+                lable = id
+    
+                images.append(cv2.imread(path, 0))
+                lables.append(int(lable))
+            id += 1
+    (im_width, im_height) = (112, 92)
+    
+    (images, lables) = [numpy.array(lis) for lis in [images, lables]]
+    return images,lables,im_width, im_height, names, id
+#model = cv2.face.LBPHFaceRecognizer_create()
+#model.train(images, lables)
+images,lables,im_width, im_height, names, id = climage()
 
 
 j=0
@@ -118,6 +121,8 @@ person1 = ""
 count = 0
 pause = 0
 count_max = 20
+model = cv2.face.LBPHFaceRecognizer_create()
+model.train(images, lables)
 #pin=sorted([int(n[:n.find('.')]) for n in os.listdir(path)
      #if n[0]!='.' ]+[0])[-1] + 1
 if not os.path.isdir(p):
@@ -215,7 +220,9 @@ while True:
                     name1 = "\""+name +"\""
                     insertOrUpdate(nextid(),name1)
                     #webcam.release()
-                    #cv2.destroyAllWindows()  
+                    #cv2.destroyAllWindows()
+                    images,lables,im_width, im_height, names, id = climage()
+                    model.train(images, lables)
                 else:
                     """webcam.release()
                     cv2.destroyAllWindows()"""  
@@ -241,6 +248,8 @@ while True:
                     
                     name1 = "\""+name +"\""
                     insertOrUpdateB(nextid(),name1)
+                    images,lables,im_width, im_height, names, id = climage()
+                    model.train(images, lables)
                 j=0
                 
         if(flag==True):
