@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Train face samples</title>
+</head>
+<body>
+	<h2> Webcam Train </h2>
+	<form action = "http://localhost:5000/takeSample" method = "POST" >
+		<label>Enter an unique ID  </label><input type='text' name='uid'></input><br><br>
+		<label>Enter your name        </label><input type='text' name='name'></input><br><br>
+		<button type="Submit">Train</button>
+	</form>
+	<br>
+	<h2> Webcam Recognize </h2>
+	<form action = "http://localhost:5000/faceRecognise" method = "POST" >
+		<label>Enter an unique ID  </label><input type='text' name='uid2'></input><br><br>
+		
+		<button type="Submit">Recognize</button>
+	</form>
+	<br>
+	<h2> Video Train </h2>
+	<form action = "http://localhost:5000/videotrain" method = "POST" 
+         enctype = "multipart/form-data">
+		 <label>Enter an unique ID  </label><input type='text' name='uid2'></input><br><br>
+         <label>Enter your name        </label><input type='text' name='name'></input><br><br>
+		 <input type = "file" name = "file" /><br><br>
+         <input type = "submit"/>
+    </form>
+	<br>
+	<h2> Video Recognize </h2>
+	<form action = "http://localhost:5000/video" method = "POST" 
+         enctype = "multipart/form-data">
+		 <label>Enter an unique ID  </label><input type='text' name='uid2'></input><br><br>
+         <input type = "file" name = "file" /><br><br>
+         <input type = "submit"/>
+    </form>
+	<br>
+	<h2> Delete Face </h2>
+	<form action = "http://localhost:5000/deleteFace" method = "POST" 
+         enctype = "multipart/form-data">
+		 <label>Enter an unique ID  </label><input type='text' name='uid2'></input><br><br>
+         <label>Enter your name        </label><input type='text' name='name'></input><br><br>
+         <input type = "submit"/>
+    </form>
+
+</body>
+</html>
