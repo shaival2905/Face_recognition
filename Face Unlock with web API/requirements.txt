@@ -3,4 +3,4 @@ imutils==0.4.6
 numpy==1.14.3
 face_recognition==1.2.2
 Flask==0.12.3
-Werkzeug==0.14.1
+Werkzeug==0.15.3
