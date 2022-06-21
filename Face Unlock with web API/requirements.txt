@@ -1,6 +1,6 @@
 dlib==19.13.0
 imutils==0.4.6
-numpy==1.14.3
+numpy==1.22.0
 face_recognition==1.2.2
 Flask==0.12.3
 Werkzeug==0.14.1
